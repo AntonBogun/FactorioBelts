@@ -1,11 +1,13 @@
 #Godot 4.0
+class_name BeltCreatePopup
 extends PanelContainer
+
 
 var buttons = []
 
 signal selected(id,pos)
 
-func handle(id):
+func handle(id: int):
 #	for button in buttons:
 #		button.pressed = false
 	print("clicked:",id_to_name(id))
@@ -18,7 +20,7 @@ func handle(id):
 	# for button in buttons:
 	# 	button.focus_mode = FocusModeEnum.NONE
 
-func id_to_name(id):
+func id_to_name(id:int):
 	return buttons[id].name
 
 func _ready():

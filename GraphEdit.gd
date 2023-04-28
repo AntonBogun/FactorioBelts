@@ -1,31 +1,34 @@
 #Godot 4.0
 extends GraphEdit
 
-
-# Called when the node enters the scene tree for the first time.
 var screen:Control
-var popup
+var popup:BeltCreatePopup
+
 func test(a,b,c):
 	prints(a,b,c)
 
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen=get_parent()
 	popup=screen.get_node("BeltCreate")
 	popup.connect_to_signal(create_node)
 	#print(Callable.a)
 
-func create_node(node_type, screen_pos):
-	prints("zoom, original pos, scroll_offset:", zoom, screen_pos, scroll_offset) 
-	screen_pos+=scroll_offset
-	screen_pos/=zoom
+func to_graph_coordinates(screen_pos: Vector2):
+	return (screen_pos+scroll_offset)/zoom;
+
+func create_node(node_id: int, screen_pos: Vector2):
+	prints("screen_pos, scroll_offset, zoom:", zoom, screen_pos, scroll_offset) 
 	
-	prints("new pos:", screen_pos)
+	var graph_pos = to_graph_coordinates(screen_pos)
+	
+	prints("graph pos:", graph_pos)
 
 	var node=preload("res://graph_node.tscn").instantiate()
-	node.init(popup.id_to_name(node_type))
+	node.init(popup.id_to_name(node_id))
 	add_child(node)
 	node.connect_to_delete(del_node.bind(node.name))
-	node.position_offset=screen_pos
+	node.position_offset=graph_pos
 
 
 
@@ -73,9 +76,11 @@ func _process(delta):
 # func _on_popup_request(position):
 # 	popup.show_popup(position)
 
-
+# From_ID : Port_ID : [To_Name, To_Port]
 var graph_from={}
+# To_ID : Port_ID : [From_Name, From_Port]
 var graph_to={}
+
 func add_edge(from_node, from_port, to_node, to_port):
 	prints("connecting:",from_node, from_port, to_node, to_port)
 	if not graph_from.has(from_node):
