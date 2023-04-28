@@ -80,7 +80,7 @@ func init(_type):
 		$div/Belts/DetailedInfo.show()
 		$div/Belts/DetailedInfo/OutputLabel.hide()
 		$div/Belts/DetailedInfo/OutputBeltDisplay.hide()
-		$div/Belt/DetailedInfo/InputLabel.text="Input:"
+		$div/Belts/DetailedInfo/InputLabel.text="Input:"
 
 		
 		set_slot(0,1,0,Color.GREEN,0,0,Color.GREEN)
