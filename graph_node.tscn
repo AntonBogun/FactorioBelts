@@ -19,6 +19,7 @@ script = ExtResource("1_x2ams")
 [node name="ind0" type="Control" parent="."]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
+mouse_filter = 2
 
 [node name="div" type="VSplitContainer" parent="ind0"]
 layout_mode = 2

@@ -11,7 +11,9 @@ signal delete
 
 func prepare_append_REAL_slot(left_enabled,left_type,left_color,right_enabled,right_type,right_color):
 	num_REAL_slots+=1
-	add_child(Control.new())
+	var _c=Control.new()
+	_c.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	add_child(_c)
 	set_slot(num_REAL_slots,left_enabled,left_type,left_color,right_enabled,right_type,right_color)
 
 
@@ -20,9 +22,9 @@ func finalize_slots():
 	if num_REAL_slots==0:
 		return
 	var slot_control_size=$ind0/div.size
-	prints("",slot_control_size)
+#	prints("BEFORE",slot_control_size)
 	slot_control_size.y/=num_REAL_slots
-	print(1)
+#	prints("CONTROL",slot_control_size)
 	for i in range(1,num_REAL_slots+1):
 		get_child(i).custom_minimum_size=slot_control_size
 
@@ -47,7 +49,7 @@ func init(_type):
 
 	elif type=="Splitter":
 		prepare_append_REAL_slot(1,0,Color.YELLOW,1,0,Color.GOLD)
-		prepare_append_REAL_slot(1,1,Color.ORANGE,1,1,Color.GOLD)
+		prepare_append_REAL_slot(1,0,Color.ORANGE,1,0,Color.GOLD)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output Left",[0,0],"/m")
@@ -72,8 +74,8 @@ func init(_type):
 	
 	elif type=="Underground" or type=="OneSide":
 		prepare_append_REAL_slot(true,0,Color.YELLOW,false,0,Color.BLUE)
-		prepare_append_REAL_slot(true,1,Color.PURPLE,true,1,Color.GOLD)
-		prepare_append_REAL_slot(true,2,Color.ORANGE,false,2,Color.BLUE)
+		prepare_append_REAL_slot(true,0,Color.PURPLE,true,0,Color.GOLD)
+		prepare_append_REAL_slot(true,0,Color.ORANGE,false,0,Color.BLUE)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output",[0,0],"/m")
@@ -109,11 +111,9 @@ func init(_type):
 		
 		var _o=belt_display.instantiate()
 		_o.init("True Input",[0,0],"/m")
-		
 	else:
 		print("Error: unrecognized type in GraphNode.gd")
 		return
-	finalize_slots()
 
 
 
