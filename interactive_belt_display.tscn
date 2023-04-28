@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dh2emcajvxesc"]
+
+[ext_resource type="Script" path="res://InputBelt.gd" id="1_00x2c"]
+
+[node name="InteractiveBeltDisplay" type="PanelContainer"]
+offset_right = 28.0
+offset_bottom = 46.0
+script = ExtResource("1_00x2c")
+
+[node name="box" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ItemLabel" type="Label" parent="box"]
+layout_mode = 2
+text = "Item"
+
+[node name="Item" type="LineEdit" parent="box"]
+layout_mode = 2
+text = "a"
+virtual_keyboard_type = 2
+
+[node name="LeftLabel" type="Label" parent="box"]
+layout_mode = 2
+text = "Left"
+
+[node name="Left" type="LineEdit" parent="box"]
+layout_mode = 2
+text = "0"
+virtual_keyboard_type = 2
+
+[node name="RightLabel" type="Label" parent="box"]
+layout_mode = 2
+text = "Right"
+
+[node name="Right" type="LineEdit" parent="box"]
+layout_mode = 2
+text = "0"
+virtual_keyboard_type = 2

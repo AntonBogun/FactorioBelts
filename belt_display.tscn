@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvydtwfhqnuf5"]
+
+[ext_resource type="Script" path="res://BeltDisplay.gd" id="1_h4hpg"]
+
+[node name="BeltDisplay" type="PanelContainer"]
+offset_right = 28.0
+offset_bottom = 46.0
+script = ExtResource("1_h4hpg")

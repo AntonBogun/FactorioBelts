@@ -1,0 +1,158 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3nvg0oqut0eb"]
+
+[ext_resource type="Script" path="res://GraphEdit.gd" id="1_dnars"]
+[ext_resource type="Script" path="res://BeltCreate.gd" id="4_0d3xu"]
+
+[node name="Main" type="Node2D"]
+
+[node name="ScreenLayer" type="CanvasLayer" parent="."]
+
+[node name="Screen" type="Control" parent="ScreenLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="ScreenLayer/Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dnars")
+
+[node name="GraphNode2" type="GraphNode" parent="ScreenLayer/Screen/GraphEdit"]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 199.0
+offset_right = 454.0
+offset_bottom = 395.0
+mouse_filter = 1
+title = "2"
+position_offset = Vector2(186, 199)
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextEdit2" type="LineEdit" parent="ScreenLayer/Screen/GraphEdit/GraphNode2"]
+layout_mode = 2
+text = "dsdsd"
+
+[node name="GraphNode3" type="GraphNode" parent="ScreenLayer/Screen/GraphEdit"]
+layout_mode = 0
+offset_left = 537.0
+offset_top = 12.0
+offset_right = 805.0
+offset_bottom = 208.0
+mouse_filter = 1
+position_offset = Vector2(537, 12)
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextEdit2" type="LineEdit" parent="ScreenLayer/Screen/GraphEdit/GraphNode3"]
+layout_mode = 2
+text = "3"
+
+[node name="BeltCreate" type="PanelContainer" parent="ScreenLayer/Screen"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_0d3xu")
+
+[node name="ClickBlock" type="Control" parent="ScreenLayer/Screen/BeltCreate"]
+visible = false
+layout_mode = 2
+
+[node name="box" type="VBoxContainer" parent="ScreenLayer/Screen/BeltCreate"]
+layout_mode = 2
+
+[node name="Input" type="Button" parent="ScreenLayer/Screen/BeltCreate/box"]
+layout_mode = 2
+text = "Input"
+
+[node name="Splitter" type="Button" parent="ScreenLayer/Screen/BeltCreate/box"]
+layout_mode = 2
+text = "Splitter"
+
+[node name="Underground" type="Button" parent="ScreenLayer/Screen/BeltCreate/box"]
+layout_mode = 2
+text = "Underground"
+
+[node name="OneSide" type="Button" parent="ScreenLayer/Screen/BeltCreate/box"]
+layout_mode = 2
+text = "One-Side Insert"
+
+[node name="Output" type="Button" parent="ScreenLayer/Screen/BeltCreate/box"]
+layout_mode = 2
+text = "Output/Throughput"
+
+[node name="PanelContainer" type="PanelContainer" parent="ScreenLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScreenLayer/PanelContainer"]
+visible = false
+layout_mode = 2
+text = "dsdsdeee"
+
+[node name="Label" type="Label" parent="ScreenLayer/PanelContainer"]
+visible = false
+layout_mode = 2
+text = "dsdsdsd"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScreenLayer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScreenLayer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Control" type="Control" parent="ScreenLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="ScreenLayer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+
+[node name="TextEdit" type="TextEdit" parent="ScreenLayer/PanelContainer/Control"]
+layout_mode = 2
+offset_top = 12.0
+offset_right = 1152.0
+offset_bottom = 648.0
+text = "dsdsd"
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(387, 739, 302, 822, 407, 912, 611, 862, 424, 765, 407, 880, 366, 805)
+
+[connection signal="connection_from_empty" from="ScreenLayer/Screen/GraphEdit" to="ScreenLayer/Screen/GraphEdit" method="_on_connection_from_empty"]
+[connection signal="connection_request" from="ScreenLayer/Screen/GraphEdit" to="ScreenLayer/Screen/GraphEdit" method="_on_connection_request"]
+[connection signal="connection_to_empty" from="ScreenLayer/Screen/GraphEdit" to="ScreenLayer/Screen/GraphEdit" method="_on_connection_to_empty"]
+[connection signal="delete_nodes_request" from="ScreenLayer/Screen/GraphEdit" to="ScreenLayer/Screen/GraphEdit" method="_on_delete_nodes_request"]
+[connection signal="disconnection_request" from="ScreenLayer/Screen/GraphEdit" to="ScreenLayer/Screen/GraphEdit" method="_on_disconnection_request"]
+[connection signal="gui_input" from="ScreenLayer/Screen/BeltCreate/ClickBlock" to="ScreenLayer/Screen/BeltCreate" method="_on_click_block_gui_input"]
