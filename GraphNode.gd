@@ -11,12 +11,20 @@ signal delete
 
 func prepare_append_REAL_slot(left_enabled,left_type,left_color,right_enabled,right_type,right_color):
 	num_REAL_slots+=1
-	
+	add_child(Control.new())
+	set_slot(num_REAL_slots,left_enabled,left_type,left_color,right_enabled,right_type,right_color)
 
 
 
 func finalize_slots():
-	
+	if num_REAL_slots==0:
+		return
+	var slot_control_size=$ind0/div.size
+	prints("",slot_control_size)
+	slot_control_size.y/=num_REAL_slots
+	print(1)
+	for i in range(1,num_REAL_slots+1):
+		get_child(i).custom_minimum_size=slot_control_size
 
 #type expected to be a string
 #recognized: Input,Splitter,Underground,OneSide,Output
@@ -29,7 +37,7 @@ func init(_type):
 		$ind0/div/Belts/DetailedInfo/InputLabel.hide()
 		$ind0/div/Belts/DetailedInfo/InputBeltDisplay.hide()
 		
-		set_slot(0,0,0,Color.GREEN,1,0,Color.BLUE)
+		prepare_append_REAL_slot(0,0,Color.GREEN,1,0,Color.BLUE)
 		
 		var _i=interactive_belt_display.instantiate()
 		$ind0/div/Belts/ThroughputBeltDisplay.add_child(_i)
@@ -38,8 +46,8 @@ func init(_type):
 		_o.init("True Output",[0,0],"/m")
 
 	elif type=="Splitter":
-		set_slot(0,1,0,Color.YELLOW,1,0,Color.GOLD)
-		set_slot(1,1,1,Color.ORANGE,1,1,Color.GOLD)
+		prepare_append_REAL_slot(1,0,Color.YELLOW,1,0,Color.GOLD)
+		prepare_append_REAL_slot(1,1,Color.ORANGE,1,1,Color.GOLD)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output Left",[0,0],"/m")
@@ -63,9 +71,9 @@ func init(_type):
 		$ind0/div/Belts/DetailedInfo/OutputBeltDisplay.add_child(_o2)
 	
 	elif type=="Underground" or type=="OneSide":
-		set_slot(0,true,0,Color.YELLOW,false,0,Color.BLUE)
-		set_slot(1,true,1,Color.PURPLE,true,1,Color.GOLD)
-		set_slot(2,true,2,Color.ORANGE,false,2,Color.BLUE)
+		prepare_append_REAL_slot(true,0,Color.YELLOW,false,0,Color.BLUE)
+		prepare_append_REAL_slot(true,1,Color.PURPLE,true,1,Color.GOLD)
+		prepare_append_REAL_slot(true,2,Color.ORANGE,false,2,Color.BLUE)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output",[0,0],"/m")
@@ -94,7 +102,7 @@ func init(_type):
 		$ind0/div/Belts/DetailedInfo/InputLabel.text="Input:"
 
 		
-		set_slot(0,true,0,Color.GREEN,true,0,Color.GREEN)
+		prepare_append_REAL_slot(true,0,Color.GREEN,true,0,Color.GREEN)
 		
 		var _i=interactive_belt_display.instantiate()
 		$ind0/div/Belts/ThroughputBeltDisplay.add_child(_i)
@@ -105,6 +113,7 @@ func init(_type):
 	else:
 		print("Error: unrecognized type in GraphNode.gd")
 		return
+	finalize_slots()
 
 
 

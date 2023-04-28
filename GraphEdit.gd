@@ -27,6 +27,7 @@ func create_node(node_id: int, screen_pos: Vector2):
 	var node=preload("res://graph_node.tscn").instantiate()
 	node.init(popup.id_to_name(node_id))
 	add_child(node)
+	print(node.get_child(0).get_child(0).size)
 	node.connect_to_delete(del_node.bind(node.name))
 	node.position_offset=graph_pos
 
@@ -145,6 +146,7 @@ func del_node(node_name):
 		for port in graph_to[node_name]:
 			del_edge(graph_to[node_name][port][0], graph_to[node_name][port][1], node_name, port)
 		graph_to.erase(node_name)
+	print(get_node(String(node_name)).get_child(0).get_child(0).size)
 	get_node(String(node_name)).queue_free()
 	
 
