@@ -73,7 +73,6 @@ func init(_type):
 		var _o1=belt_display.instantiate()
 		_o1.init("Max Output",[0,0],"/m")
 		$div/Belts/DetailedInfo/OutputBeltDisplay.add_child(_o1)
-		$div/Belts/DetailedInfo/OutputBeltDisplay.add_child(_o2)
 		
 	elif type=="Output":
 		$div/Belts/ThroughputLabel.text="Desired Output:"
@@ -81,6 +80,8 @@ func init(_type):
 		$div/Belts/DetailedInfo.show()
 		$div/Belts/DetailedInfo/OutputLabel.hide()
 		$div/Belts/DetailedInfo/OutputBeltDisplay.hide()
+		$div/Belt/DetailedInfo/InputLabel.text="Input:"
+
 		
 		set_slot(0,1,0,Color.GREEN,0,0,Color.GREEN)
 		
