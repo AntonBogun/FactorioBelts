@@ -3,8 +3,6 @@ extends GraphNode
 var type
 var belt_display=preload("res://belt_display.tscn")
 var interactive_belt_display=preload("res://interactive_belt_display.tscn")
-var to_col=Color.GREEN
-var from_col=Color.BLUE
 
 signal delete
 
@@ -29,8 +27,8 @@ func init(_type):
 		_o.init("True Output",[0,0],"/m")
 
 	elif type=="Splitter":
-		set_slot(0,1,0,Color.GREEN,1,0,Color.BLUE)
-		set_slot(1,1,0,Color.GREEN,1,0,Color.BLUE)
+		set_slot(0,1,0,Color.YELLOW,1,0,Color.GOLD)
+		set_slot(1,1,0,Color.ORANGE,1,0,Color.GOLD)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output Left",[0,0],"/m")
@@ -54,9 +52,9 @@ func init(_type):
 		$div/Belts/DetailedInfo/OutputBeltDisplay.add_child(_o2)
 	
 	elif type=="Underground" or type=="OneSide":
-		set_slot(0,1,0,Color.GREEN,0,0,Color.BLUE)
-		set_slot(1,1,0,Color.GREEN,1,0,Color.BLUE)
-		set_slot(2,1,0,Color.GREEN,0,0,Color.BLUE)
+		set_slot(0,1,0,Color.YELLOW,0,0,Color.BLUE)
+		set_slot(1,1,0,Color.PURPLE,1,0,Color.GOLD)
+		set_slot(2,1,0,Color.ORANGE,0,0,Color.BLUE)
 		
 		var _t1=belt_display.instantiate()
 		_t1.init("Output",[0,0],"/m")
@@ -78,11 +76,13 @@ func init(_type):
 		$div/Belts/DetailedInfo/OutputBeltDisplay.add_child(_o2)
 		
 	elif type=="Output":
-		$div/Belts/ThroughputLabel.text="Output:"
+		$div/Belts/ThroughputLabel.text="Desired Output:"
+		$div/Belts/ShowMore.hide()
+		$div/Belts/DetailedInfo.show()
 		$div/Belts/DetailedInfo/OutputLabel.hide()
 		$div/Belts/DetailedInfo/OutputBeltDisplay.hide()
 		
-		set_slot(0,1,0,Color.GREEN,0,0,Color.BLUE)
+		set_slot(0,1,0,Color.GREEN,0,0,Color.GREEN)
 		
 		var _i=interactive_belt_display.instantiate()
 		$div/Belts/ThroughputBeltDisplay.add_child(_i)
