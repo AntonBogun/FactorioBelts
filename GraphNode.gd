@@ -3,9 +3,20 @@ extends GraphNode
 var type
 var belt_display=preload("res://belt_display.tscn")
 var interactive_belt_display=preload("res://interactive_belt_display.tscn")
+var num_REAL_slots=0
 
 signal delete
 
+
+
+func prepare_append_REAL_slot(left_enabled,left_type,left_color,right_enabled,right_type,right_color):
+	num_REAL_slots+=1
+	
+
+
+
+func finalize_slots():
+	
 
 #type expected to be a string
 #recognized: Input,Splitter,Underground,OneSide,Output
