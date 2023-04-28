@@ -43,6 +43,7 @@ func init(_type):
 		_i2.init("Input Right",[0,0],"/m")
 		$div/Belts/DetailedInfo/InputBeltDisplay.add_child(_i1)
 		$div/Belts/DetailedInfo/InputBeltDisplay.add_child(_i2)
+		
 
 		var _o1=belt_display.instantiate()
 		_o1.init("Max Output Left",[0,0],"/m")
