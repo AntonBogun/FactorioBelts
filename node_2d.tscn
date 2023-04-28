@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3nvg0oqut0eb"]
+[gd_scene load_steps=4 format=3 uid="uid://c3nvg0oqut0eb"]
 
 [ext_resource type="Script" path="res://GraphEdit.gd" id="1_dnars"]
+[ext_resource type="Script" path="res://PainNode.gd" id="2_0q0o0"]
 [ext_resource type="Script" path="res://BeltCreate.gd" id="4_0d3xu"]
 
 [node name="Main" type="Node2D"]
+metadata/_edit_lock_ = true
 
 [node name="ScreenLayer" type="CanvasLayer" parent="."]
 
@@ -36,16 +38,33 @@ offset_bottom = 395.0
 mouse_filter = 1
 title = "2"
 position_offset = Vector2(186, 199)
-slot/0/left_enabled = true
+slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
 slot/0/left_icon = null
-slot/0/right_enabled = true
+slot/0/right_enabled = false
 slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
-metadata/_edit_lock_ = true
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = true
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+script = ExtResource("2_0q0o0")
+
+[node name="Control" type="Control" parent="ScreenLayer/Screen/GraphEdit/GraphNode2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="ScreenLayer/Screen/GraphEdit/GraphNode2/Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="TextEdit2" type="LineEdit" parent="ScreenLayer/Screen/GraphEdit/GraphNode2"]
 layout_mode = 2
