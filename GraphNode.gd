@@ -5,6 +5,24 @@ var belt_display=preload("res://belt_display.tscn")
 var interactive_belt_display=preload("res://interactive_belt_display.tscn")
 var num_REAL_slots=0
 
+#multiple for multiple lines
+#each entry has [left,right], where left and right are dictionaries of {item_name:amount}
+var outputs=[]
+#each entry is just [sum_left,sum_right]
+var totals=[]
+
+#the node selects a single function to be used for evaluation instead of costly string comparisons
+
+# func process_type_Input(inputs,max_outputs):
+# 	if max_outputs
+
+
+func _process(delta):
+	pass
+
+
+
+
 signal delete
 
 
@@ -18,7 +36,18 @@ func prepare_append_REAL_slot(left_enabled,left_type,left_color,right_enabled,ri
 
 
 
+func _on_ind_0_sort_children():
+	# print("sort_signal")
+	finalize_slots()
+	
+
 func finalize_slots():
+	$ind0.custom_minimum_size.x=$ind0/div.size.x
+	$ind0.reset_size()
+	reset_size() #when this is removed and a printscreen is taken while the graphnode is in focus (*not* the show button)
+	#it will cause the node to stop automatically resizing down for some reason (probably godot bug)
+#	prints(type,": size :",$ind0/div.size, "; ind0:",$ind0.size)
+	
 	if num_REAL_slots==0:
 		return
 	var slot_control_size=$ind0/div.size
@@ -102,15 +131,14 @@ func init(_type):
 		$ind0/div/Belts/DetailedInfo/OutputLabel.hide()
 		$ind0/div/Belts/DetailedInfo/OutputBeltDisplay.hide()
 		$ind0/div/Belts/DetailedInfo/InputLabel.text="Input:"
-
-		
 		prepare_append_REAL_slot(true,0,Color.GREEN,true,0,Color.GREEN)
-		
 		var _i=interactive_belt_display.instantiate()
+		_i.get_node("box/ItemLabel").hide() #prevent item input from showing up
+		_i.get_node("box/Item").hide()
 		$ind0/div/Belts/ThroughputBeltDisplay.add_child(_i)
 		
-		var _o=belt_display.instantiate()
-		_o.init("True Input",[0,0],"/m")
+		# var _o=belt_display.instantiate()
+		# _o.init("True Input",[0,0],"/m")
 	else:
 		print("Error: unrecognized type in GraphNode.gd")
 		return
@@ -120,20 +148,17 @@ func init(_type):
 func connect_to_delete(_callable):
 	delete.connect(_callable)
 
-func _on_focus_changed(control:Control):
-	if control != null:
-		print(control.name, "print at GraphNode.gd")
+#func _on_focus_changed(control:Control):
+#	if control != null:
+#		print(control.name, "print at GraphNode.gd")
 
-func _ready():
-	get_viewport().gui_focus_changed.connect(_on_focus_changed)
+#func _ready():
+#	get_viewport().gui_focus_changed.connect(_on_focus_changed)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 
 func _on_show_more_toggled(button_pressed):
+#	prints("showmore:",button_pressed)
 	if button_pressed:
 		$ind0/div/Belts/DetailedInfo.show()
 		$ind0/div/Belts/ShowMore.text="Show Less"
@@ -153,3 +178,8 @@ func _on_delete_toggled(button_pressed):
 func _on_delete_focus_exited():
 	$ind0/div/Delete.text="Delete"
 	$ind0/div/Delete.set_pressed_no_signal(false)
+
+
+
+
+

@@ -10,7 +10,7 @@ signal selected(id,pos)
 func handle(id: int):
 #	for button in buttons:
 #		button.pressed = false
-	print("clicked:",id_to_name(id))
+	print("[BeltCreate] clicked:",id_to_name(id))
 	hide()
 	selected.emit(id,position)
 

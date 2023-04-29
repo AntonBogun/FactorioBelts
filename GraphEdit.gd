@@ -18,17 +18,17 @@ func to_graph_coordinates(screen_pos: Vector2):
 	return (screen_pos+scroll_offset)/zoom;
 
 func create_node(node_id: int, screen_pos: Vector2):
-	prints("screen_pos, scroll_offset, zoom:", zoom, screen_pos, scroll_offset) 
+#	prints("screen_pos, scroll_offset, zoom:", zoom, screen_pos, scroll_offset) 
 	
 	var graph_pos = to_graph_coordinates(screen_pos)
 	
-	prints("graph pos:", graph_pos)
+#	prints("graph pos:", graph_pos)
 
 	var node=preload("res://graph_node.tscn").instantiate()
 	node.init(popup.id_to_name(node_id))
 	add_child(node)
-	node.finalize_slots()
-	prints("ACTUAL",node.get_child(0).get_child(0).size)
+	# node.finalize_slots()
+#	prints("ACTUAL",node.get_child(0).get_child(0).size)
 	node.connect_to_delete(del_node.bind(node.name))
 	node.position_offset=graph_pos
 
@@ -45,14 +45,16 @@ func _input(event:InputEvent):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
-				print("right click on graph")
+#				print("right click on graph")
 				if popup.is_visible():
 					popup.hide()
 				popup.show_popup(get_global_mouse_position())
+				LM_timer=0
 			return
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed and popup.is_visible():
 				LM_pressed=true
+				LM_timer=0
 			return
 	# print(event)
 	LM_pressed=false
@@ -66,13 +68,12 @@ func _input(event:InputEvent):
 	# 			del_node(node.name)
 
 func _process(delta):
-	if popup.is_visible():
-		if LM_pressed:
-			LM_timer+=delta
-			if LM_timer>LM_delay:
-				LM_pressed=false
-				LM_timer=0
-				popup.hide()
+	LM_pressed=LM_pressed and popup.is_visible()
+	if LM_pressed:
+		LM_timer+=delta
+		if LM_timer>LM_delay:
+			LM_pressed=false
+			popup.hide()
 
 
 # func _on_popup_request(position):
@@ -84,7 +85,7 @@ var graph_from={}
 var graph_to={}
 
 func add_edge(from_node, from_port, to_node, to_port):
-	prints("connecting:",from_node, from_port, to_node, to_port)
+	prints("[GraphEdit] connecting:",from_node, from_port, to_node, to_port)
 	if not graph_from.has(from_node):
 		graph_from[from_node]={}
 	if not graph_to.has(to_node):
@@ -94,7 +95,7 @@ func add_edge(from_node, from_port, to_node, to_port):
 	connect_node(from_node, from_port, to_node, to_port)
 
 func del_edge(from_node, from_port, to_node, to_port):
-	prints("disconnecting:",from_node, from_port, to_node, to_port)
+	prints("[GraphEdit] disconnecting:",from_node, from_port, to_node, to_port)
 	if graph_from.has(from_node):
 		if graph_from[from_node].has(from_port):
 			graph_from[from_node].erase(from_port)
@@ -104,7 +105,7 @@ func del_edge(from_node, from_port, to_node, to_port):
 	disconnect_node(from_node, from_port, to_node, to_port)
 
 func del_port(node, port, is_from=true):
-	prints("disconnecting port:",node, port)
+	prints("[GraphEdit] disconnecting port:",node, port)
 	if is_from:
 		if graph_from.has(node):
 			if graph_from[node].has(port):
@@ -138,7 +139,7 @@ func _on_connection_from_empty(to_node, to_port, release_position):
 
 
 func del_node(node_name):
-	prints("deleting node:",node_name)
+	prints("[GraphEdit] deleting node:",node_name)
 	if graph_from.has(node_name):
 		for port in graph_from[node_name]:
 			del_edge(node_name, port, graph_from[node_name][port][0], graph_from[node_name][port][1])
@@ -147,7 +148,7 @@ func del_node(node_name):
 		for port in graph_to[node_name]:
 			del_edge(graph_to[node_name][port][0], graph_to[node_name][port][1], node_name, port)
 		graph_to.erase(node_name)
-	print("DELETE",get_node(String(node_name)).get_child(0).get_child(0).size)
+#	print("DELETE",get_node(String(node_name)).get_child(0).get_child(0).size)
 	get_node(String(node_name)).queue_free()
 	
 
